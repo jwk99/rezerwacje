@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Dodaj podsumowanie wizyty</title>
+</head>
+<body>
+    <h2>Podsumowanie wizyty</h2>
+    <p>
+        Pacjent: {{appointment.patient.imie}} {{appointment.patient.nazwisko}} <br>
+        Data: {{appointment.date}} | Godzina: {{appointment.time}}
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Zapis</button>
+    </form>
+
+    <p><a href="{% url 'doctor_dashboard' %}">Powrót</a></p>
+</body>
+</html>

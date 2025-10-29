@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Rejestracja</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            max-width: 350px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            width: 100%;
+            background-color: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #115293;
+        }
+        .errorlist, .error {
+            color: red;
+            list-style: none;
+            padding: 0;
+            margin: 5px 0 0 0;
+        }
+        small {
+            display: block;
+            margin-top: 5px;
+            color: #555;
+            font-size: 12px;
+        }
+        h2, p {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>Załóż konto</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <label for="id_username">Nazwa użytkownika:</label>
+        {{ form.username }}
+        {% if form.username.errors %}
+            <ul class="errorlist">
+                {% for error in form.username.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <label for="id_email">Adres email:</label>
+        {{ form.email }}
+        {% if form.email.errors %}
+            <ul class="errorlist">
+                {% for error in form.email.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <label for="id_pesel">PESEL:</label>
+        {{ form.pesel }}
+        {% if form.pesel.errors %}
+            <ul class="errorlist">
+                {% for error in form.pesel.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <label for="id_imie">Imię:</label>
+        {{ form.imie }}
+        {% if form.imie.errors %}
+            <ul class="errorlist">
+                {% for error in form.imie.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <label for="id_nazwisko">Nazwisko:</label>
+        {{ form.nazwisko }}
+        {% if form.nazwisko.errors %}
+            <ul class="errorlist">
+                {% for error in form.nazwisko.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <label for="id_data_urodzenia">Data urodzenia:</label>
+        {{ form.data_urodzenia }}
+        {% if form.data_urodzenia.errors %}
+            <ul class="errorlist">
+                {% for error in form.data_urodzenia.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <label for="id_telefon">Telefon:</label>
+        {{ form.telefon }}
+        {% if form.telefon.errors %}
+            <ul class="errorlist">
+                {% for error in form.telefon.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <label for="id_adres">Adres zamieszkania:</label>
+        {{ form.adres }}
+        {% if form.adres.errors %}
+            <ul class="errorlist">
+                {% for error in form.adres.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <label for="id_password1">Hasło:</label>
+        {{ form.password1 }}
+        {% if form.password1.help_text %}
+            <small>{{ form.password1.help_text|safe }}</small>
+        {% endif %}
+        {% if form.password1.errors %}
+            <ul class="errorlist">
+                {% for error in form.password1.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <label for="id_password2">Potwierdź hasło:</label>
+        {{ form.password2 }}
+        {% if form.password2.errors %}
+            <ul class="errorlist">
+                {% for error in form.password2.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <button type="submit">Zarejestruj</button>
+    </form>
+
+    <p>Masz już konto? <a href="{% url 'login' %}">Zaloguj się</a></p>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel lekarza</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display:flex;
+        }
+        .sidebar {
+            background: #f5f5f5;
+            height:100vh;
+            width:200px;
+            padding:20px;
+            box-sizing:border-box;
+        }
+        .sidebar button {
+            display: block;
+            width:100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: none;
+            background: #ddd;
+            cursor: pointer;
+        }
+        .sidebar button:hover {
+            background: #bbb;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+        .widget {
+            display:none;
+        }
+        .widget.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h3>Witaj, dr {{user.username}}</h3>
+        <button onclick="showWidget('wizyty')">Wizyty</button>
+        <button onclick="showWidget('wnioski')">Wnioski</button>
+        <button onclick="showWidget('zastepstwa')">Zastępstwa</button>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" style="background:#e57373; color:white;">Wyloguj</button>
+        </form>  
+    </div>
+
+    <div class="content">
+        <div id="wizyty" class="widget active">
+            <h2>Moje wizyty</h2>
+                {% if appointments %}
+                    <table class="table table striped">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Godzina</th>
+                                <th>Pacjent</th>
+                                <th>Typ wizyty</th>
+                                <th>Status</th>
+                                <th>Akcja</th>
+                        </thead>
+                        <tbody>
+                            {% for appt in appointments %}
+                                <tr>
+                                    <td>{{ appt.date }}</td>
+                                    <td>{{ appt.time }}</td>
+                                    <td>{{ appt.patient.imie }} {{ appt.patient.nazwisko }}</td>
+                                    <td>{{ appt.type.name }}</td>
+                                    <td>{{ appt.get_status_display }}</td>
+                                    <td>
+                                        {% if appt.status == 'scheduled' %}
+                                            <a href="{% url 'add_visit_summary' appt.id %}" class="btn btn-primary">
+                                                Podsumowanie
+                                            </a>
+                                        {% else %}
+                                            <span>Zakończona</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>Nie masz żadnych zaplanowanych wizyt.</p>
+                {% endif %}
+        </div>
+        <div id="wnioski" class="widget">
+              <h2>Wnioski o wolne</h2>
+                <form method="post" enctype="multipart/form-data" action="{% url 'doctor_dashboard' %}">
+                    {% csrf_token %}
+                    {{ leave_form.as_p }}
+                    <button type="submit" class="btn btn-primary btn-sm">Złóż wniosek</button>
+                </form>
+
+                <table class="table mt-3">
+                    <thead>
+                    <tr>
+                        <th>Typ</th>
+                        <th>Od</th>
+                        <th>Do</th>
+                        <th>Status</th>
+                        <th>Załącznik</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for req in leave_requests %}
+                    <tr>
+                        <td>{{ req.get_leave_type_display }}</td>
+                        <td>{{ req.start_date }}</td>
+                        <td>{{ req.end_date }}</td>
+                        <td>{{ req.get_status_display }}</td>
+                        <td>
+                            {% if req.document %}
+                                <a href="{{ req.document.url }}" target="_blank">📄 Pobierz załącznik</a>
+                            {% else %}
+                                Brak pliku
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="5" class="text-center">Brak wniosków</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+        </div>
+        <div id="zastepstwa" class="widget">
+            <h2>Zastępstwa</h2>
+            <p>Tutaj będzie można wziąc zastępstwo za lekarza tej samej specjalizacji</p>
+        </div>
+    </div>
+
+    <script>
+        function showWidget(id)
+        {
+            document.querySelectorAll(".widget").forEach(el => el.classList.remove("active"));
+            document.getElementById(id).classList.add("active");
+        }
+    </script>
+</body>
+</html>

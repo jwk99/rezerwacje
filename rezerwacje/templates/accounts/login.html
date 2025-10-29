@@ -1,0 +1,131 @@
+<!Doctype html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <title>Logowanie</title>
+    <style>
+    body {
+        background: url("{% static 'images/backgrounds/login_bg.png' %}") no-repeat center center;
+        background-size: cover;
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, sans-serif;
+    }
+
+    .login-container {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+        width: 300px; /* stała szerokość dla całości */
+        box-sizing: border-box;
+    }
+
+    .login-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+
+    /* KLUCZOWA ZMIANA */
+    input[type="text"],
+    input[type="password"],
+    button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box; /* padding NIE powiększa elementu */
+    }
+
+    button {
+        background: #1976d2;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin-top: 15px;
+    }
+
+    button:hover {
+        background: #115293;
+    }
+
+    .errorlist {
+        color: red;
+        list-style: none;
+        padding: 0;
+        margin: 5px 0 0;
+        font-size: 13px;
+    }
+
+    .login-container p {
+        text-align: center;
+        margin-top: 15px;
+    }
+
+    .login-container a {
+        color: #1976d2;
+        text-decoration: none;
+    }
+
+    .login-container a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+</head>
+<body>
+    <div class="login-container">
+        <h2>Zaloguj się</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+                <ul class="errorlist">
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <label for="id_username">Nazwa użytkownika:</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+                <ul class="errorlist">
+                    {% for error in form.username.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <label for="id_password">Hasło:</label>
+            {{ form.password }}
+            {% if form.password.errors %}
+                <ul class="errorlist">
+                    {% for error in form.password.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <br>
+            <button type="submit">Zaloguj</button>
+        </form>
+
+        <p>Nie masz konta?
+        <a href="{% url 'register' %}">Zarejestruj się tutaj</a>
+        </p>
+    </div>
+</body>
+</html>
