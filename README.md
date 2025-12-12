@@ -14,19 +14,27 @@ Przed uruchomieniem projektu należy upewnić się, że masz zainstalowane:
 
 ## Uruchamianie projektu
   - Sklonuj repozytorium:
-
+git clone https://github.com/jwk99/rezerwacje.git
   - Wejdź do katalogu projektu:
-
+cd rezerwacje
   - Utwórz środowisko wirtualne i je aktywuj:
-
+python -m venv venv
+dla Windows
+venv\Scripts\activate
+dla Linux
+source venv/bin/activate
+Alternatywnie dla Windows:
+Uruchom cmd.exe jako administrator
+cd rezerwacje
+t.bat (plik wsadowy zawarty w repozytorium)
   - Zainstaluj wymagania:
-
+pip install -r requirements.txt
   - Zastosuj migracje baz danych:
-
+python manage.py migrate
   - Uruchom serwer deweloperski:
-
+python manage.py runserver
   - Wejdź w przeglądarce na adres:
-
+http://127.0.0.1:8000/accounts/login
 ## Typy kont i funkcjonalności
 ### Lekarz
 - Może przeglądać swoje wizyty.
