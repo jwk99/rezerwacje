@@ -35,6 +35,7 @@ python manage.py migrate
 python manage.py runserver
   - ### Wejdź w przeglądarce na adres:
 http://127.0.0.1:8000/accounts/login
+#### W razie problemów z uruchomieniem, użyć ponownie cd rezerwacje
 ## Typy kont i funkcjonalności
 ### Lekarz
 - Może przeglądać swoje wizyty.
