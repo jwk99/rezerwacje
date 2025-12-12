@@ -12,6 +12,21 @@ Przed uruchomieniem projektu należy upewnić się, że masz zainstalowane:
 - **PIP**
 - **wirtualne środowisko (venv)**
 
+## Uruchamianie projektu
+  - Sklonuj repozytorium:
+
+  - Wejdź do katalogu projektu:
+
+  - Utwórz środowisko wirtualne i je aktywuj:
+
+  - Zainstaluj wymagania:
+
+  - Zastosuj migracje baz danych:
+
+  - Uruchom serwer deweloperski:
+
+  - Wejdź w przeglądarce na adres:
+
 ## Typy kont i funkcjonalności
 ### Lekarz
 - Może przeglądać swoje wizyty.
