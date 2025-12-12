@@ -34,7 +34,10 @@ python manage.py migrate
   - ### Uruchom serwer deweloperski:
 python manage.py runserver
   - ### Wejdź w przeglądarce na adres:
-http://127.0.0.1:8000/accounts/login
+#### http://127.0.0.1:8000/accounts/login
+Dla rozpoczęcia prac na projekcie.
+#### http://127.0.0.1:8000/admin
+By uzyskać dostęp do panelu administratora systemu.
 #### W razie problemów z uruchomieniem, użyć ponownie cd rezerwacje
 ## Typy kont i funkcjonalności
 ### Lekarz
